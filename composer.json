@@ -4,7 +4,8 @@
     "type": "magento2-module",
     "prefer-stable": true,  
     "license": [
-        "proprietary"
+        "OSL-3.0",
+        "AFL-3.0"
     ],
     "require": {
         "magento/framework": "*",
@@ -15,7 +16,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "SR\\LlmsTxt\\": ""
+            "SR\\LlmsTxt\\": "src"
         }
     },
     "support": {
