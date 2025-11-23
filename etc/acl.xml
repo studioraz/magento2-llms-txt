@@ -9,7 +9,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="SR_{ModuleName}::config" title="{ModuleName}" translate="title" sortOrder="10000"/>
+                <resource id="SR_LlmsTxt::config" title="LlmsTxt" translate="title" sortOrder="10000"/>
             </resource>
         </resources>
     </acl>

@@ -1,9 +1,9 @@
 {
-    "name": "studioraz/magento2-{module-name}",
-    "description": "{description}",
+    "name": "studioraz/magento2-llms-txt",
+    "description": "Magento 2 module for generating llms.txt files - a standardized markdown format for AI/LLM consumption of project documentation and structure",
     "type": "magento2-module",
     "prefer-stable": true,
-    "version": "{version}",
+    "version": "1.0.0",
     "license": [
         "proprietary"
     ],
@@ -16,7 +16,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "SR\\{ModuleName}\\": ""
+            "SR\\LlmsTxt\\": ""
         }
     },
     "support": {

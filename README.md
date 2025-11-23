@@ -1,18 +1,9 @@
-```
-Template Repository for Magento 2 repository module
-
-To create a new repository based on this repository choose it on the "Create a new repository" page's Repository template drop-down. 
-
-1. Replace template variables {ModuleName}, {title}, {description}, {version} {module-name} with real values.
-3. Update README content below
-4. Remove this whole section 
-```
-
-# Studio Raz Magento 2 for {title}
+# Studio Raz Magento 2 LLMs.txt
 
 ## Features
-1. ...
-2. ...
+1. Generates llms.txt files in a standardized markdown format
+2. Provides AI/LLM-friendly documentation and project structure information
+3. Enables better AI/LLM understanding of Magento 2 project context
 
 ## Installation
 
@@ -28,11 +19,11 @@ To create a new repository based on this repository choose it on the "Create a n
 
 3. Install this module within Magento 2 using composer
     ```
-    composer require studioraz/magento2-{module-name}
+    composer require studioraz/magento2-llms-txt
     ```
 
 4. After this, enable the module as usual
     ```
-    bin/magento mo:e SR_{ModuleName} &&
+    bin/magento mo:e SR_LlmsTxt &&
     bin/magento s:up
     ```
