@@ -1,14 +1,10 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2025 Studio Raz. All rights reserved.
- * See LICENSE.txt for license details.
- */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="SR_LlmsTxt" setup_version="1.0.0">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="SR_LlmsTxt">
         <sequence>
             <module name="SR_Base"/>
+            <module name="SR_Codemirror"/>
         </sequence>
     </module>
 </config>

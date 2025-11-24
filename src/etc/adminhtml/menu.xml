@@ -8,6 +8,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="SR_LlmsTxt::config" title="LLMS.txt" module="SR_LlmsTxt" translate="title" sortOrder="10000"
-             action="adminhtml/system_config/edit/section/sr_LlmsTxt" parent="SR_Base::srbase" resource="SR_LlmsTxt::config"/>
+             action="adminhtml/system_config/edit/section/llmstxt/" parent="SR_Base::srbase" resource="SR_LlmsTxt::config"/>
     </menu>
 </config>

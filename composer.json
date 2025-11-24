@@ -2,14 +2,15 @@
     "name": "studioraz/magento2-llms-txt",
     "description": "Magento 2 module for generating llms.txt files - a standardized markdown format for AI/LLM consumption of project documentation and structure",
     "type": "magento2-module",
-    "prefer-stable": true,  
+    "prefer-stable": true,
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
     "require": {
         "magento/framework": "*",
-        "studioraz/magento2-base": "*"
+        "studioraz/magento2-base": "^1.3",
+        "studioraz/magento2-codemirror": "^1.0"
     },
     "autoload": {
         "files": [
