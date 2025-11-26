@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace SR\LlmsTxt\Model;
 
+use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
+use Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator;
+use Magento\Cms\Helper\Page;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
@@ -43,5 +46,39 @@ class Config
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    public function getConfigValue(string $path, int $storeId): string
+    {
+        return (string)($this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId) ?: '');
+    }
+
+    public function getCategoryUrlSuffix(int $storeId): string
+    {
+        return $this->getConfigValue(CategoryUrlPathGenerator::XML_PATH_CATEGORY_URL_SUFFIX, $storeId);
+    }
+
+    public function getProductUrlSuffix(int $storeId): string
+    {
+        return $this->getConfigValue(ProductUrlPathGenerator::XML_PATH_PRODUCT_URL_SUFFIX, $storeId);
+    }
+
+    public function getHomePageIdentifier(int $storeId): string
+    {
+        // Use the configured home page identifier for the store
+        $identifier = $this->getConfigValue(Page::XML_PATH_HOME_PAGE, $storeId);
+        return $identifier ?: 'home';
+    }
+
+    public function getNoRouteIdentifier(int $storeId): string
+    {
+        $identifier = $this->getConfigValue(Page::XML_PATH_NO_ROUTE_PAGE, $storeId);
+        return $identifier ?: 'no-route';
+    }
+
+    public function getNoCookiesIdentifier(int $storeId): string
+    {
+        $identifier = $this->getConfigValue(Page::XML_PATH_NO_COOKIES_PAGE, $storeId);
+        return $identifier ?: 'no-cookies';
     }
 }

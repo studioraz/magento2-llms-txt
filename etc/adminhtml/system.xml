@@ -9,15 +9,16 @@
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Settings</label>
                 <comment><![CDATA[
-                    <p>LLM.txt is a standard for helping AI systems understand your store's content.</p>
+                    <p>LLMS.txt is a standard for helping AI systems understand your store's content.</p>
                     <p>Learn more at <a href="https://llmstxt.org" target="_blank">llmstxt.org</a></p>
                 ]]></comment>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable LLM.txt</label>
+                    <label>Enable LLMS.txt</label>
                     <comment>When enabled, your store will serve an llms.txt file at /llms.txt</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <!-- Hidden functionality for now: By default - TRUE -->
+                <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="0">
                     <label>Use Manual Content</label>
                     <comment>Override generated content with your own custom content</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -27,6 +28,7 @@
                 </field>
                 <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Content</label>
+                    <validate>required-entry</validate>
                     <comment>Write your own llms.txt content in markdown format</comment>
                     <frontend_model>SR\Codemirror\Block\Adminhtml\System\Config\Form\Field\Markdown</frontend_model>
                     <depends>

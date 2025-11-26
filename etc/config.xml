@@ -2,11 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <llmtxt>
+        <llmstxt>
             <general>
                 <enabled>0</enabled>
-                <use_manual_content>0</use_manual_content>
+                <!-- Always use manual content by default -->
+                <use_manual_content>1</use_manual_content>
             </general>
-        </llmtxt>
+        </llmstxt>
     </default>
 </config>

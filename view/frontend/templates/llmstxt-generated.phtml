@@ -5,45 +5,58 @@
 $block = $block ?? $this->getLayout()->getBlock('llmstxt.data');
 $data = $block->getData('generatedData')->getCollectedData();
 ?>
-# <?= $data['store_name'] . PHP_EOL ?>
+# <?= $data['store_name'] ?>
 
-# <?= $data['home_page_meta_title'] . PHP_EOL ?>
 
-## <?= __('Store Information') . PHP_EOL ?>
+# <?= $data['home_page_meta_title'] ?>
+
+
+## <?= __('Store Information') ?>
+
+
+<?php if (!empty($data['cms_pages'])): ?>
 <?php foreach ($data['cms_pages'] as $page): ?>
-- <?= $page['full_content'] . PHP_EOL ?>
+- [<?= $page['title'] ?>](<?= $page['url'] ?>) : <?= $page['meta_description'] . PHP_EOL ?>
 <?php endforeach; ?>
-<?= PHP_EOL ?>
+<?php endif; ?>
 
-## <?= __('Shop Categories') . PHP_EOL ?>
-<?php foreach ($data['categories'] as $page): ?>
-- <?= $page['full_content'] . PHP_EOL ?>
+## <?= __('Shop Categories') ?>
+
+
+<?php if (!empty($data['categories'])): ?>
+<?php foreach ($data['categories'] as $cat): ?>
+- [<?= $cat['name'] ?>](<?= $cat['url'] ?>) : <?= $cat['description'] . PHP_EOL ?>
 <?php endforeach; ?>
-<?= PHP_EOL ?>
-
+<?php endif; ?>
 
 ## <?= __('Orders & Account Support') ?>
+
+
 <!-- Helps assistants answer “where’s my order?” or account/payment questions. -->
-- [My Account]({{DOMAIN}}/customer/account/login): Manage profile, addresses, and order history.
-- [Order Tracking]({{DOMAIN}}//sales/order/history): Track shipments using order number or login.
+- [My Account](<?= $data['store_url'] ?>customer/account/login): Manage profile, addresses, and order history.
+- [Order Tracking](<?= $data['store_url'] ?>sales/order/history): Track shipments using order number or login.
 
 ## <?= __('Product / Data Feeds') ?>
-<!-- Optional but high-value for ecommerce.
-     Link to clean structured feeds (JSON/CSV) or public API docs. -->
-- [Product Feed]({{PRODUCT_FEED_URL}}): Structured catalog with product names, prices, and availability.
--->
-<!-- print 10 bestsellers products available on the frontend -->
 
 
+<?php foreach ($data['product_feed_urls'] as $key => $feedUrl): ?>
+- [Product Feed <?php if ($key > 0) {
+    echo $key;
+} ?>](<?= $feedUrl ?>): Structured catalog with product names, prices, and availability.
+<?php endforeach; ?>
+<?php foreach ($data['products'] as $product): ?>
+- [<?= $product['name'] ?>](<?= $product['url'] ?>) : <?= $product['description'] . PHP_EOL ?>
+<?php endforeach; ?>
+
+<?php if (!empty($data['point_of_sales'])): ?>
 ## <?= __('Physical Stores') ?>
-- [Store Locator]({{DOMAIN}}/pointosale): Find all branch addresses, opening hours, and contact details.
 
-<!-- If you want to highlight a few flagship POS locations in addition to the locator,
-     list only 3–5 max so the file stays curated and future-proof. -->
 
-- [Tel Aviv – Dizengoff Center](https://example.com/stores/tel-aviv-dizengoff): Dizengoff Center, Tel Aviv · Sun–Thu 10:00–21:00 · +972-3-0000000
-- [Jerusalem – Mamilla](https://example.com/stores/jerusalem-mamilla): Mamilla Mall, Jerusalem · Sun–Thu 10:00–21:00 · +972-2-0000000
-
+- [Store Locator](<?= $data['store_url'] ?>pointofsale): Find all branch addresses, opening hours, and contact details.
+<?php foreach ($data['point_of_sales'] as $pointOfSale): ?>
+- [<?= $pointOfSale['name'] ?>](<?= $pointOfSale['url'] ?>): <?= $pointOfSale['address'] ?> · <?= $pointOfSale['opening_hours'] ?> · <?= $pointOfSale['phone'] . PHP_EOL ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
 <!-- ## Featured Collections -->
 <!-- Only include stable, meaningful “shopping shortcuts”. Keep 3–6 links. Update seasonally. -->

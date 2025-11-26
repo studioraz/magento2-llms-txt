@@ -39,7 +39,7 @@ class Data extends AbstractBlock
         try {
             $storeId = (int) $this->storeManager->getStore()->getId();
 
-            if (!$this->config->isEnabled($storeId)) {
+            if (!$this->config->isEnabled($storeId) && $this->appState->getAreaCode() === Area::AREA_FRONTEND) {
                 return '';
             }
 
