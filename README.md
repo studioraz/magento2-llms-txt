@@ -57,8 +57,8 @@ This module generates a standardized `llms.txt` file in markdown format for Mage
 
 ## Advanced Features
 
-- **Product Feeds**: If using [Mirasvit_Feed](https://mirasvit.com/magento-2-advanced-product-feed.html), product feed URLs (Google, Facebook, etc.) are included.
-- **Point of Sale Locations**: If [SR_PointOfSale](https://www.studioraz.co.il/) is installed, POS contact details are shown.
+- **Product Feeds**: If using `Mirasvit_Feed`, product feed URLs (Google, Facebook, etc.) are included.
+- **Point of Sale Locations**: If `SR_PointOfSale` is installed, POS contact details are shown.
 
 ---
 
