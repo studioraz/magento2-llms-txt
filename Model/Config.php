@@ -48,6 +48,15 @@ class Config
         );
     }
 
+    public function getStoreName(?int $storeId = null): string
+    {
+        return (string) $this->scopeConfig->getValue(
+            'general/store_information/name',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
     public function getConfigValue(string $path, int $storeId): string
     {
         return (string)($this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId) ?: '');

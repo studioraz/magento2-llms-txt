@@ -63,6 +63,9 @@ class Data extends AbstractBlock
                 $html = $templateEngine->render($this, $name);
 
                 $this->appEmulation->stopEnvironmentEmulation();
+
+                //$html = preg_replace('/^\s+/m', '', $html);
+
                 return $html;
             }
 

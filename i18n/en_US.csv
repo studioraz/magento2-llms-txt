@@ -1,0 +1,37 @@
+"Generate Content","Generate Content"
+"Content generated successfully!","Content generated successfully!"
+"Generation failed: %1","Generation failed: %1"
+"Copy to Clipboard","Copy to Clipboard"
+"Store Information","Store Information"
+"Shop Categories","Shop Categories"
+"Main Categories","Main Categories"
+"Featured Products","Featured Products"
+"Orders & Account Support","Orders & Account Support"
+"Manage profile, addresses, and order history.","Manage profile, addresses, and order history."
+"Track shipments using order number or login.","Track shipments using order number or login."
+"Physical Stores","Physical Stores"
+"Store locator","Store locator"
+Address,Address
+"Opening Hours","Opening Hours"
+Phone,Phone
+"Store Page","Store Page"
+"Frequently Asked Questions","Frequently Asked Questions"
+"Connect with Us on Social Media","Connect with Us on Social Media"
+"Product Feeds","Product Feeds"
+"Google Shopping Feed","Google Shopping Feed"
+"Facebook Product Feed","Facebook Product Feed"
+Warning,Warning
+"The whole existing content will be replaced after auto generating.","The whole existing content will be replaced after auto generating."
+Error,Error
+"Failed to connect to generation service. Please try again.","Failed to connect to generation service. Please try again."
+Copied!,Copied!
+"Failed to copy","Failed to copy"
+"No Content","No Content"
+"Content field not found","Content field not found"
+LLMS.txt,LLMS.txt
+"General Settings","General Settings"
+"Enable LLMS.txt","Enable LLMS.txt"
+"When enabled, your store will serve an llms.txt file at /llms.txt","When enabled, your store will serve an llms.txt file at /llms.txt"
+"Use Manual Content","Use Manual Content"
+"Override generated content with your own custom content","Override generated content with your own custom content"
+Content,Content

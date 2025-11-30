@@ -1,0 +1,37 @@
+"Generate Content","צור תוכן"
+"Content generated successfully!","התוכן נוצר בהצלחה!"
+"Generation failed: %1","יצירת התוכן נכשלה: %1"
+"Copy to Clipboard","העתק ללוח"
+"Store Information","מידע על החנות"
+"Shop Categories","קטגוריות חנות"
+"Main Categories","קטגוריות ראשיות"
+"Featured Products","מוצרים נבחרים"
+"Orders & Account Support",הזמנות ותמיכת לקוחות
+"Manage profile, addresses, and order history.","ניהול פרופיל, כתובות והיסטוריית הזמנות."
+"Track shipments using order number or login.","מעקב אחר משלוחים באמצעות מספר הזמנה או התחברות."
+"Physical Stores","חנויות פיזיות"
+"Store locator",רשימת חנויות
+Address,כתובת
+"Opening Hours","שעות פתיחה"
+Phone,טלפון
+"Store Page","עמוד החנות"
+"Frequently Asked Questions","שאלות נפוצות"
+"Connect with Us on Social Media","התחברו אלינו ברשתות החברתיות"
+"Product Feeds","פידים של מוצרים"
+"Google Shopping Feed",פיד גוגל
+"Facebook Product Feed","פיד מוצרים לפייסבוק"
+Warning,אזהרה
+"The whole existing content will be replaced after auto generating.","כל התוכן הקיים יוחלף לאחר יצירה אוטומטית."
+Error,שגיאה
+"Failed to connect to generation service. Please try again.","ההתחברות לשירות יצירת התוכן נכשלה. אנא נסו שוב."
+Copied!,הועתק!
+"Failed to copy","ההעתקה נכשלה"
+"No Content","אין תוכן"
+"Content field not found","שדה התוכן לא נמצא"
+LLMS.txt,LLMS.txt
+"General Settings","הגדרות כלליות"
+"Enable LLMS.txt","הפעל LLMS.txt"
+"When enabled, your store will serve an llms.txt file at /llms.txt","כאשר מופעל, החנות תציג קובץ llms.txt ב־/llms.txt"
+"Use Manual Content","השתמש בתוכן ידני"
+"Override generated content with your own custom content","דרוס את התוכן שנוצר בתוכן מותאם אישית משלך"
+Content,תוכן

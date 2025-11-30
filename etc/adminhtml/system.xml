@@ -11,10 +11,30 @@
                 <comment><![CDATA[
                     <p>LLMS.txt is a standard for helping AI systems understand your store's content.</p>
                     <p>Learn more at <a href="https://llmstxt.org" target="_blank">llmstxt.org</a></p>
+                    <p><strong>How to use:</strong></p>
+                    <ol style="margin-left: 30px;">
+                        <li>Enable the LLMS.txt feature by setting 'Enable LLMS.txt' to 'Yes'.</li>
+                        <li>Click on 'Generate Content' button.</li>
+                        <li>Wait for the process to complete (may take a few seconds).</li>
+                        <li>The generated content will appear in the <code>Content</code> field below.</li>
+                        <li>Review the content and make any desired edits.</li>
+                        <li>Save the configuration to apply the changes.</li>
+                    </ol>
+                   <p><strong>If you'd like to use a markdown editor for further customization, follow these steps:</strong></p>
+                   <ol style="margin-left: 30px;">
+                        <li>Click on 'Copy to Clipboard' button to copy the content from <code>Content</code> field.</li>
+                        <li>Go to <a target="_blank" href="https://markdownlivepreview.com">markdownlivepreview.com</a>.</li>
+                        <li>Paste the content into the editor to preview and edit it.</li>
+                        <li>Review the formatting and make any necessary changes.</li>
+                        <li>Once satisfied, copy the final version from the online editor.</li>
+                        <li>Paste it back into the <code>Content</code> field in your Magento configuration and save your changes.</li>
+                        <li>Save the configuration to apply the changes.</li>
+                    </ol>
+                    <br/>
                 ]]></comment>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable LLMS.txt</label>
-                    <comment>When enabled, your store will serve an llms.txt file at /llms.txt</comment>
+                    <comment>When enabled, your store will serve an llms.txt file at https://www.yourdomain.com/llms.txt</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <!-- Hidden functionality for now: By default - TRUE -->
@@ -29,7 +49,6 @@
                 <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Content</label>
                     <validate>required-entry</validate>
-                    <comment>Write your own llms.txt content in markdown format</comment>
                     <frontend_model>SR\Codemirror\Block\Adminhtml\System\Config\Form\Field\Markdown</frontend_model>
                     <depends>
                         <field id="*/*/enabled">1</field>

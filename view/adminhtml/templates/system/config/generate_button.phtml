@@ -5,95 +5,137 @@
 ?>
 <div class="llmtxt-generate-container">
     <?= $block->getButtonHtml() ?>
+    <button id="llmtxt_copy_button" type="button" class="action-default scalable" style="margin-left:10px;">
+        <?= __('Copy to Clipboard') ?>
+    </button>
     <div id="llmtxt-generate-status" style="margin-top: 10px; display: none;">
         <span class="llmtxt-generated-message"></span>
     </div>
 </div>
 
 <script>
-require([
-    'jquery',
-    'Magento_Ui/js/modal/alert',
-    'Magento_Ui/js/modal/confirm',
-    'mage/translate',
-    'domReady!'
-], function ($, alert, confirm, $t) {
-    'use strict';
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/alert',
+        'Magento_Ui/js/modal/confirm',
+        'mage/translate',
+        'domReady!'
+    ], function ($, alert, confirm, $t) {
+        'use strict';
 
-    $('#llmtxt_generate_button').on('click', function () {
-        const button = $(this);
-        const statusDiv = $('#llmtxt-generate-status');
-        const statusMessage = statusDiv.find('.llmtxt-generated-message');
+        $('#llmtxt_generate_button').on('click', function () {
+            const button = $(this);
+            const statusDiv = $('#llmtxt-generate-status');
+            const statusMessage = statusDiv.find('.llmtxt-generated-message');
 
-        confirm({
-            title: $t('Warning'),
-            content: $t('The whole existing content will be replaced after auto generating.'),
-            actions: {
-                confirm: function () {
-                    // Disable button and show loading
-                    button.prop('disabled', true).addClass('disabled');
-                    statusDiv.show();
-                    statusMessage.html('<span style="color: #007bdb;">⏳ Generating content... This may take some time.</span>');
+            confirm({
+                title: $t('Warning'),
+                content: $t('The whole existing content will be replaced after auto generating.'),
+                actions: {
+                    confirm: function () {
+                        // Disable button and show loading
+                        button.prop('disabled', true).addClass('disabled');
+                        statusDiv.show();
+                        statusMessage.html('<span style="color: #007bdb;">⏳ Generating content... This may take some time.</span>');
 
-                    $.ajax({
-                        url: '<?= $block->escapeJs($block->getAjaxUrl()) ?>',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            form_key: FORM_KEY,
-                            store: '<?= (int) $block->getRequest()->getParam('store', 0) ?>'
-                        },
-                        success: function (response) {
-                            if (response.success) {
-                                // Populate the content textarea
-                                const contentField = $('[name="groups[general][fields][manual_content][value]"]');
-                                if (contentField.length) {
-                                    contentField.val(response.content);
-                                    contentField.trigger('change');
+                        $.ajax({
+                            url: '<?= $block->escapeJs($block->getAjaxUrl()) ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                form_key: FORM_KEY,
+                                store: '<?= (int)$block->getRequest()->getParam('store', 0) ?>'
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    // Populate the content textarea
+                                    const contentField = $('[name="groups[general][fields][manual_content][value]"]');
+                                    if (contentField.length) {
+                                        contentField.val(response.content);
+                                        contentField.trigger('change');
+                                    }
+
+                                    statusMessage.html(
+                                        '<span style="color: #79a22e; font-weight: 500;">✓ ' + response.message + '</span>' +
+                                        '<br><small>Review the generated content above and click "Save Config" to apply.</small>'
+                                    );
+                                } else {
+                                    statusMessage.html('<span style="color: #e02b27; font-weight: 500;">✗ ' + response.message + '</span>');
+                                    alert({
+                                        title: $t('Error'),
+                                        content: response.error || response.message
+                                    });
                                 }
-
-                                statusMessage.html(
-                                    '<span style="color: #79a22e; font-weight: 500;">✓ ' + response.message + '</span>' +
-                                    '<br><small>Review the generated content above and click "Save Config" to apply.</small>'
-                                );
-
-                                alert({
-                                    title: $t('Success'),
-                                    content: $t('LLMS.txt content generated successfully. Review and save when ready.')
-                                });
-                            } else {
-                                statusMessage.html('<span style="color: #e02b27; font-weight: 500;">✗ ' + response.message + '</span>');
+                            },
+                            error: function (xhr, status, error) {
+                                statusMessage.html('<span style="color: #e02b27;">✗ Request failed: ' + error + '</span>');
                                 alert({
                                     title: $t('Error'),
-                                    content: response.error || response.message
+                                    content: $t('Failed to connect to generation service. Please try again.')
                                 });
+                            },
+                            complete: function () {
+                                button.prop('disabled', false).removeClass('disabled');
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            statusMessage.html('<span style="color: #e02b27;">✗ Request failed: ' + error + '</span>');
-                            alert({
-                                title: $t('Error'),
-                                content: $t('Failed to connect to generation service. Please try again.')
-                            });
-                        },
-                        complete: function () {
-                            button.prop('disabled', false).removeClass('disabled');
-                        }
-                    });
-                },
-                cancel: function () {
-                    // Do nothing
+                        });
+                    },
+                    cancel: function () {
+                        // Do nothing
+                    }
                 }
+            });
+        });
+
+        // Copy to clipboard button logic
+        $('#llmtxt_copy_button').on('click', function () {
+            const contentField = $('[name="groups[general][fields][manual_content][value]"]');
+            const copyButton = $(this);
+            if (contentField.length) {
+                const content = contentField.val();
+                if (content) {
+                    // Use Clipboard API if available
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(content).then(function () {
+                            copyButton.text($t('Copied!'));
+                            setTimeout(function () {
+                                copyButton.text($t('Copy to Clipboard'));
+                            }, 600);
+                        }, function () {
+                            copyButton.text($t('Failed to copy'));
+                            setTimeout(function () {
+                                copyButton.text($t('Copy to Clipboard'));
+                            }, 600);
+                        });
+                    } else {
+                        // Fallback for older browsers
+                        contentField.select();
+                        document.execCommand('copy');
+                        copyButton.text($t('Copied!'));
+                        setTimeout(function () {
+                            copyButton.text($t('Copy to Clipboard'));
+                        }, 600);
+                    }
+                } else {
+                    copyButton.text($t('No Content'));
+                    setTimeout(function () {
+                        copyButton.text($t('Copy to Clipboard'));
+                    }, 600);
+                }
+            } else {
+                copyButton.text($t('Content field not found'));
+                setTimeout(function () {
+                    copyButton.text($t('Copy to Clipboard'));
+                }, 1500);
             }
         });
     });
-});
 </script>
 
 <style>
     .llmtxt-generate-container {
         padding: 10px 0;
     }
+
     #llmtxt-generate-status {
         padding: 10px;
         background: #f5f5f5;

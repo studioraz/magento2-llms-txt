@@ -36,7 +36,7 @@ class GenerateButton extends Field
             \Magento\Backend\Block\Widget\Button::class
         )->setData([
             'id' => 'llmtxt_generate_button',
-            'label' => __('Generate content'),
+            'label' => __('Generate Content'),
             'class' => 'action-default scalable',
         ]);
 

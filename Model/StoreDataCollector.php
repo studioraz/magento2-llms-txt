@@ -32,7 +32,7 @@ class StoreDataCollector
         $baseUrl = $this->getBaseUrl($storeId);
 
         return [
-            'store_name' => $this->storeManager->getStore($storeId)->getName(),
+            'store_name' => $this->config->getStoreName($storeId),
             'store_url' => $baseUrl,
             'home_page_meta_title' => $this->getHomePageMetaTitle($storeId),
             'categories' => $this->collectCategories($storeId, $baseUrl),
@@ -45,9 +45,8 @@ class StoreDataCollector
 
     protected function collectCategories(int $storeId, string $baseUrl): array
     {
-        $categorySuffix = $this->config->getCategoryUrlSuffix($storeId);
         $collection = $this->categoryCollectionFactory->create();
-        $collection->addAttributeToSelect(['name', 'url_key', 'description'])
+        $collection->addAttributeToSelect(['name', 'url_key', 'meta_description'])
             ->addAttributeToFilter('is_active', 1)
             ->addAttributeToFilter('level', 2) // Only top-level categories
             ->setStoreId($storeId)
@@ -56,9 +55,9 @@ class StoreDataCollector
         $categories = [];
         foreach ($collection as $category) {
             $categories[] = [
-                'name' => (string)$category->getName(),
-                'url' => $baseUrl . $category->getUrlKey() . $categorySuffix,
-                'description' => strip_tags((string)$category->getDescription()),
+                'name' => $category->getName(),
+                'url' =>  $category->getUrl(),
+                'description' => $category->getMetaDescription()
             ];
         }
 
@@ -67,7 +66,6 @@ class StoreDataCollector
 
     protected function collectProducts(int $storeId, string $baseUrl): array
     {
-        $productSuffix = $this->config->getProductUrlSuffix($storeId);
         // Get 10 bestsellers for the current store
         $bestsellerCollection = \Magento\Framework\App\ObjectManager::getInstance()->create(\Magento\Sales\Model\ResourceModel\Report\Bestsellers\Collection::class);
         $bestsellerCollection->setModel(\Magento\Catalog\Model\Product::class)
@@ -80,24 +78,28 @@ class StoreDataCollector
         foreach ($bestsellerCollection as $bestseller) {
             $productIds[] = $bestseller->getProductId();
         }
-        if (empty($productIds)) {
-            return [];
-        }
 
         $collection = $this->productCollectionFactory->create();
-        $collection->addAttributeToSelect(['name', 'url_key', 'short_description'])
-            ->addAttributeToFilter('entity_id', ['in' => $productIds])
+        $collection->addAttributeToSelect(['name', 'url_key', 'short_description', 'meta_description'])
             ->addAttributeToFilter('status', 1)
             ->addAttributeToFilter('visibility', ['in' => [2, 3, 4]])
             ->setStoreId($storeId)
-            ->addStoreFilter($storeId);
+            ->addUrlRewrite()
+            ->addStoreFilter($storeId)
+            ->setCurPage(1)
+            ->setPageSize(10);
+
+        if (!empty($productIds)) {
+            $collection->addAttributeToFilter('entity_id', ['in' => $productIds]);
+        }
+
 
         $products = [];
         foreach ($collection as $product) {
             $products[] = [
                 'name' => (string)$product->getName(),
-                'url' => $baseUrl . $product->getUrlKey() . $productSuffix,
-                'description' => strip_tags((string)$product->getShortDescription()),
+                'url' => $product->getProductUrl(),
+                'description' => $product->getMetaDescription()
             ];
         }
 

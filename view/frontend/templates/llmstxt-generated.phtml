@@ -1,18 +1,17 @@
 <?php
 /**
- * @var $block \SR\LlmsTxt\ViewModel\GeneratedData */
+* @var $block \SR\LlmsTxt\ViewModel\GeneratedData
+*/
 
 $block = $block ?? $this->getLayout()->getBlock('llmstxt.data');
 $data = $block->getData('generatedData')->getCollectedData();
 ?>
 # <?= $data['store_name'] ?>
 
-
-# <?= $data['home_page_meta_title'] ?>
+<?= $data['home_page_meta_title'] ?>
 
 
 ## <?= __('Store Information') ?>
-
 
 <?php if (!empty($data['cms_pages'])): ?>
 <?php foreach ($data['cms_pages'] as $page): ?>
@@ -22,49 +21,72 @@ $data = $block->getData('generatedData')->getCollectedData();
 
 ## <?= __('Shop Categories') ?>
 
+### <?= __('Main Categories') ?>
 
 <?php if (!empty($data['categories'])): ?>
 <?php foreach ($data['categories'] as $cat): ?>
-- [<?= $cat['name'] ?>](<?= $cat['url'] ?>) : <?= $cat['description'] . PHP_EOL ?>
+- [<?= $cat['name'] ?>](<?= $cat['url'] ?>)<?php if (!empty($cat['description'])): ?> : <?= $cat['description'] ?><?php endif; ?><?= PHP_EOL ?>
 <?php endforeach; ?>
 <?php endif; ?>
+
+## <?= __('Featured Products') ?>
+
+<?php foreach ($data['products'] as $product): ?>
+- [<?= $product['name'] ?>](<?= $product['url'] ?>)<?php if (!empty($product['description'])): ?> : <?= $product['description'] ?><?php endif; ?><?= PHP_EOL ?>
+<?php endforeach; ?>
 
 ## <?= __('Orders & Account Support') ?>
 
+- [<?= _('My Account'); ?>](<?= $data['store_url'] ?>customer/account/login): <?= __('Manage profile, addresses, and order history.') ?><?= PHP_EOL ?>
+- [<?= _('Order Tracking')?>](<?= $data['store_url'] ?>sales/order/history): <?= __('Track shipments using order number or login.') ?><?= PHP_EOL ?>
 
-<!-- Helps assistants answer “where’s my order?” or account/payment questions. -->
-- [My Account](<?= $data['store_url'] ?>customer/account/login): Manage profile, addresses, and order history.
-- [Order Tracking](<?= $data['store_url'] ?>sales/order/history): Track shipments using order number or login.
-
-## <?= __('Product / Data Feeds') ?>
-
-
-<?php foreach ($data['product_feed_urls'] as $key => $feedUrl): ?>
-- [Product Feed <?php if ($key > 0) {
-    echo $key;
-} ?>](<?= $feedUrl ?>): Structured catalog with product names, prices, and availability.
-<?php endforeach; ?>
-<?php foreach ($data['products'] as $product): ?>
-- [<?= $product['name'] ?>](<?= $product['url'] ?>) : <?= $product['description'] . PHP_EOL ?>
-<?php endforeach; ?>
 
 <?php if (!empty($data['point_of_sales'])): ?>
-## <?= __('Physical Stores') ?>
+## <?= $escaper->escapeHtml(__('Physical Stores')) . PHP_EOL . PHP_EOL ?>
 
+<?= $escaper->escapeHtml(__('Store locator')) ?>: <?= $escaper->escapeUrl($data['store_url'] . 'pointofsale') . PHP_EOL . PHP_EOL ?>
 
-- [Store Locator](<?= $data['store_url'] ?>pointofsale): Find all branch addresses, opening hours, and contact details.
-<?php foreach ($data['point_of_sales'] as $pointOfSale): ?>
-- [<?= $pointOfSale['name'] ?>](<?= $pointOfSale['url'] ?>): <?= $pointOfSale['address'] ?> · <?= $pointOfSale['opening_hours'] ?> · <?= $pointOfSale['phone'] . PHP_EOL ?>
+<?php foreach ($data['point_of_sales'] as $pos): ?>
+### <?= $escaper->escapeHtml($pos['name']) ?> ###<?= PHP_EOL ?>
+- <?= $escaper->escapeHtml(__('Address')) ?>: <?= $escaper->escapeHtml($pos['address']) ?><?= PHP_EOL ?>
+- <?= $escaper->escapeHtml(__('Opening Hours')) ?>: <?= $escaper->escapeHtml($pos['opening_hours']) ?><?= PHP_EOL ?>
+- <?= $escaper->escapeHtml(__('Phone')) ?>: <?= $escaper->escapeHtml($pos['phone']) ?><?= PHP_EOL ?>
+- <?= $escaper->escapeHtml(__('Store Page')) ?>: <?= $escaper->escapeUrl($pos['url']) ?><?= PHP_EOL . PHP_EOL ?>
+
 <?php endforeach; ?>
 <?php endif; ?>
 
-<!-- ## Featured Collections -->
-<!-- Only include stable, meaningful “shopping shortcuts”. Keep 3–6 links. Update seasonally. -->
+<!-- Uncomment to include FAQ section -->
+<!-- WARNING: customize the questions and answers before publishing -->
+<!--
+## <?= __('Frequently Asked Questions') ?><?= PHP_EOL ?>
+
+## Shipping & Delivery
+
+** Q: How much does shipping cost?**
+A: Shipping costs vary based on order size and destination. Standard shipping starts at $5.99, with free shipping on orders over $75.
+
+** Q: Do you offer international shipping?**
+A: Yes, we ship to select countries worldwide. Please check our Shipping Policy page for the
+-->
 
 
-<!-- ## Guides & Content -->
-<!-- Authoritative help content. Link hubs/landing pages, not every post. Skip if you don’t have strong guides. -->
+<!-- Uncomment to include Social Media Links section -->
+<!-- WARNING: replace dummy links with actual social media URLs before publishing -->
+<!--
+## <?= __('Connect with Us on Social Media') ?><?= PHP_EOL ?>
+- [facebook] (https://www.facebook.com/{accoubnt})
+- [facebook] (https://www.instagram.com/{account})
+- [telegram](https://t.me/{account})
+- [tikTok](https://www.tiktok.com/@{account})
+-->
 
 
-<!-- ## Optional -->
-<!-- Low-priority pages you don’t mind AI using, but not core. Keep short. -->
+
+<!-- Uncomment to include Product Feeds section -->
+<!-- WARNING: replace dummy links with actual feed URLs before publishing -->
+<!--
+## <?= __('Product Feeds') ?><?= PHP_EOL ?>
+- <?= __('Google Shopping Feed') ?>: <?= $data['store_url'] ?>feed/google.xml<?= PHP_EOL ?>
+- <?= __('Facebook Product Feed') ?>: <?= $data['store_url'] ?>feed/facebook.xml<?= PHP_EOL ?>
+-->
