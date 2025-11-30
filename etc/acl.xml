@@ -5,7 +5,9 @@
         <resources>
             <resource id="Magento_Backend::admin">
                 <resource id="SR_Base::srbase">
-                    <resource id="SR_LlmsTxt::config" title="LLMS.txt Configuration" sortOrder="100"/>
+                    <resource id="SR_LlmsTxt::srllmstxt" title="LLMS.txt" sortOrder="150">
+                        <resource id="SR_LlmsTxt::config" title="LLMS.txt Settings" sortOrder="100">
+                    </resource>
                 </resource>
             </resource>
         </resources>
