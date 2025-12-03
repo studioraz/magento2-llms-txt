@@ -49,7 +49,6 @@
                 <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Content</label>
                     <validate>required-entry</validate>
-                    <frontend_model>SR\Codemirror\Block\Adminhtml\System\Config\Form\Field\Markdown</frontend_model>
                     <depends>
                         <field id="*/*/enabled">1</field>
                     </depends>
