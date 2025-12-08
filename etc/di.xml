@@ -4,8 +4,8 @@
     <type name="SR\LlmsTxt\Model\StoreDataCollector">
         <arguments>
             <argument name="dependenciesArray" xsi:type="array">
-                <item name="feedCollection" shared="false" xsi:type="object">Mirasvit\Feed\Model\ResourceModel\Feed\Collection</item>
-                <item name="posCollection" shared="false" xsi:type="object">SR\PointOfSale\Model\ResourceModel\PointOfSale\Collection</item>
+                <item name="feedCollection" xsi:type="string">Mirasvit\Feed\Model\ResourceModel\Feed\Collection</item>
+                <item name="posCollection" xsi:type="string">SR\PointOfSale\Model\ResourceModel\PointOfSale\Collection</item>
             </argument>
         </arguments>
     </type>

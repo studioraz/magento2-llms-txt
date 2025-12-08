@@ -13,10 +13,12 @@ use Magento\Framework\Module\Manager;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface as UrlInterface;
+use Magento\Framework\ObjectManagerInterface;
 
 class StoreDataCollector
 {
     public function __construct(
+        private readonly ObjectManagerInterface    $objectManager,
         private readonly StoreManagerInterface     $storeManager,
         private readonly CategoryCollectionFactory $categoryCollectionFactory,
         private readonly ProductCollectionFactory  $productCollectionFactory,
@@ -58,7 +60,7 @@ class StoreDataCollector
         foreach ($collection as $category) {
             $categories[] = [
                 'name' => $category->getName(),
-                'url' =>  $category->getUrl(),
+                'url' => $category->getUrl(),
                 'description' => $category->getMetaDescription()
             ];
         }
@@ -183,9 +185,8 @@ class StoreDataCollector
         }
 
         foreach ($this->dependenciesArray as $dependency) {
-            $feedCollection = 'Mirasvit\Feed\Model\ResourceModel\Feed\Collection';
-            if ($dependency instanceof $feedCollection) {
-                $feedCollection = $dependency;
+            if ($dependency === 'Mirasvit\Feed\Model\ResourceModel\Feed\Collection') {
+                $feedCollection = $this->objectManager->create($dependency);
                 break;
             }
         }
@@ -211,9 +212,8 @@ class StoreDataCollector
         }
 
         foreach ($this->dependenciesArray as $dependency) {
-            $posCollection = 'SR\PointOfSale\Model\ResourceModel\PointOfSale\Collection';
-            if ($dependency instanceof $posCollection) {
-                $posCollection = $dependency;
+            if ($dependency === 'SR\PointOfSale\Model\ResourceModel\PointOfSale\Collection') {
+                $posCollection = $this->objectManager->create($dependency);
                 break;
             }
         }
