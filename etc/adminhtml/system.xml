@@ -37,28 +37,39 @@
                     <comment>When enabled, your store will serve an llms.txt file at https://www.yourdomain.com/llms.txt</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+
+                <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pages</label>
+                    <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+
+                <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Categories</label>
+                    <source_model>SR\LlmsTxt\Model\Source\ActiveWithEmptyOptionCategory</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Product Limit</label>
+                    <comment>Number of best-selling products to include in the LLMS.txt feed (default: 10)</comment>
+                    <validate>required-entry validate-number validate-greater-than-zero</validate>
+                </field>
+
                 <!-- Hidden functionality for now: By default - TRUE -->
                 <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="0">
                     <label>Use Manual Content</label>
                     <comment>Override generated content with your own custom content</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="*/*/enabled">1</field>
-                    </depends>
                 </field>
                 <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Content</label>
                     <validate>required-entry</validate>
-                    <depends>
-                        <field id="*/*/enabled">1</field>
-                    </depends>
                 </field>
                 <field id="generate_button" translate="label" type="button" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label></label>
                     <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\GenerateButton</frontend_model>
-                    <depends>
-                        <field id="*/*/enabled">1</field>
-                    </depends>
                 </field>
             </group>
         </section>

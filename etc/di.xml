@@ -9,4 +9,15 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="SR\LlmsTxt\Model\Source\ActiveWithEmptyOptionCategory" type="SR\LlmsTxt\Model\Source\Category">
+        <arguments>
+            <argument name="filters" xsi:type="array">
+                <item name="is_active" xsi:type="string">1</item>
+                <item name="level" xsi:type="array">
+                    <item name="gt" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>

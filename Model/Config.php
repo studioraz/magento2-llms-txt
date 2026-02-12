@@ -15,6 +15,9 @@ class Config
     private const XML_PATH_ENABLED = 'llmstxt/general/enabled';
     private const XML_PATH_MANUAL_CONTENT = 'llmstxt/general/manual_content';
     private const XML_PATH_USE_MANUAL_CONTENT = 'llmstxt/general/use_manual_content';
+    private const XML_PATH_PAGES = 'llmstxt/general/pages';
+    private const XML_PATH_CATEGORIES = 'llmstxt/general/categories';
+    private const XML_PATH_PRODUCT_LIMIT = 'llmstxt/general/product_limit';
 
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig
@@ -62,14 +65,24 @@ class Config
         return (string)($this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId) ?: '');
     }
 
-    public function getCategoryUrlSuffix(int $storeId): string
+    public function getPages(?int $storeId = null): array
     {
-        return $this->getConfigValue(CategoryUrlPathGenerator::XML_PATH_CATEGORY_URL_SUFFIX, $storeId);
+        $value = $this->scopeConfig->getValue(
+            self::XML_PATH_PAGES,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        return $value ? explode(',', (string)$value) : [];
     }
 
-    public function getProductUrlSuffix(int $storeId): string
+    public function getCategories(?int $storeId = null): array
     {
-        return $this->getConfigValue(ProductUrlPathGenerator::XML_PATH_PRODUCT_URL_SUFFIX, $storeId);
+        $value = $this->scopeConfig->getValue(
+            self::XML_PATH_CATEGORIES,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        return $value ? explode(',', (string)$value) : [];
     }
 
     public function getHomePageIdentifier(int $storeId): string
@@ -79,15 +92,13 @@ class Config
         return $identifier ?: 'home';
     }
 
-    public function getNoRouteIdentifier(int $storeId): string
+    public function getProductLimit(?int $storeId = null): int
     {
-        $identifier = $this->getConfigValue(Page::XML_PATH_NO_ROUTE_PAGE, $storeId);
-        return $identifier ?: 'no-route';
-    }
-
-    public function getNoCookiesIdentifier(int $storeId): string
-    {
-        $identifier = $this->getConfigValue(Page::XML_PATH_NO_COOKIES_PAGE, $storeId);
-        return $identifier ?: 'no-cookies';
+        $limit = $this->scopeConfig->getValue(
+            self::XML_PATH_PRODUCT_LIMIT,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        return (int)($limit ?: 10);
     }
 }

@@ -49,12 +49,21 @@ class StoreDataCollector
 
     protected function collectCategories(int $storeId, string $baseUrl): array
     {
+        $categoryIds = $this->config->getCategories($storeId);
+
         $collection = $this->categoryCollectionFactory->create();
         $collection->addAttributeToSelect(['name', 'url_key', 'meta_description'])
             ->addAttributeToFilter('is_active', 1)
-            ->addAttributeToFilter('level', 2) // Only top-level categories
             ->setStoreId($storeId)
             ->setOrder('position', 'ASC');
+
+        // Filter by configured category IDs if specified
+        if (!empty($categoryIds)) {
+            $collection->addAttributeToFilter('entity_id', ['in' => $categoryIds]);
+        } else {
+            // Fall back to level 2 categories if no configuration is set
+            $collection->addAttributeToFilter('level', 2);
+        }
 
         $categories = [];
         foreach ($collection as $category) {
@@ -70,12 +79,14 @@ class StoreDataCollector
 
     protected function collectProducts(int $storeId, string $baseUrl): array
     {
-        // Get 10 bestsellers for the current store
+        $productLimit = $this->config->getProductLimit($storeId);
+
+        // Get bestsellers for the current store
         $bestsellerCollection = \Magento\Framework\App\ObjectManager::getInstance()->create(\Magento\Sales\Model\ResourceModel\Report\Bestsellers\Collection::class);
         $bestsellerCollection->setModel(\Magento\Catalog\Model\Product::class)
             ->addStoreFilter($storeId)
             ->setPeriod('year')
-            ->setPageSize(10)
+            ->setPageSize($productLimit)
             ->setCurPage(1);
 
         $productIds = [];
@@ -91,7 +102,7 @@ class StoreDataCollector
             ->addUrlRewrite()
             ->addStoreFilter($storeId)
             ->setCurPage(1)
-            ->setPageSize(10);
+            ->setPageSize($productLimit);
 
         if (!empty($productIds)) {
             $collection->addAttributeToFilter('entity_id', ['in' => $productIds]);
@@ -112,15 +123,14 @@ class StoreDataCollector
 
     protected function collectCmsPages(int $storeId, string $baseUrl): array
     {
-        $homePageIdentifier = $this->config->getHomePageIdentifier($storeId);
-        $noRouteIdentifier = $this->config->getNoRouteIdentifier($storeId);
-        $noCookiesIdentifier = $this->config->getNoCookiesIdentifier($storeId);
-        $skipIdentifiers = [$homePageIdentifier, $noRouteIdentifier, $noCookiesIdentifier];
+        $pageIds = $this->config->getPages($storeId);
 
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('is_active', 1)
             ->addFilter('store_id', [$storeId, 0], 'in')
-            ->create();
+            ->addFilter('identifier', $pageIds, 'in');
+
+        $searchCriteria = $searchCriteria->create();
 
         try {
             $pages = $this->pageRepository->getList($searchCriteria)->getItems();
@@ -131,11 +141,7 @@ class StoreDataCollector
         $cmsPages = [];
 
         foreach ($pages as $page) {
-            $identifier = (string)$page->getIdentifier();
-
-            if (in_array($identifier, $skipIdentifiers, true)) {
-                continue;
-            }
+            $identifier = $page->getIdentifier();
 
             $cmsPages[] = [
                 'title' => (string)$page->getTitle(),
@@ -143,12 +149,6 @@ class StoreDataCollector
                 'meta_description' => (string)$page->getMetaDescription(),
             ];
         }
-        // Add Contact Us page
-        $cmsPages[] = [
-            'title' => 'Contact Us',
-            'url' => $baseUrl . 'contact',
-            'meta_description' => 'Get in touch with us through our Contact Us page.',
-        ];
 
         return $cmsPages;
     }
