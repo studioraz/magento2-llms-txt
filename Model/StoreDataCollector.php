@@ -12,7 +12,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Module\Manager;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface as UrlInterface;
 use Magento\Framework\ObjectManagerInterface;
 
 class StoreDataCollector
@@ -24,7 +23,6 @@ class StoreDataCollector
         private readonly ProductCollectionFactory  $productCollectionFactory,
         private readonly PageRepositoryInterface   $pageRepository,
         private readonly SearchCriteriaBuilder     $searchCriteriaBuilder,
-        private readonly UrlInterface              $urlBuilder,
         private readonly Manager                   $moduleManager,
         private readonly Config                    $config,
         private readonly ?array $dependenciesArray = null
@@ -140,12 +138,23 @@ class StoreDataCollector
 
         $cmsPages = [];
 
+        $baseUrl = rtrim($baseUrl, '/');
+
         foreach ($pages as $page) {
             $identifier = $page->getIdentifier();
 
+            // If the page is the home page, use the base URL without the identifier
+            $homePageIdentifier = $this->config->getHomePageIdentifier($storeId);
+            if ($identifier === $homePageIdentifier) {
+                $identifier = '';
+            }
+            else {
+                $identifier = '/' . $identifier;
+            }
+
             $cmsPages[] = [
                 'title' => (string)$page->getTitle(),
-                'url' => $baseUrl . $this->urlBuilder->getUrl($identifier),
+                'url' => $baseUrl . $identifier,
                 'meta_description' => (string)$page->getMetaDescription(),
             ];
         }

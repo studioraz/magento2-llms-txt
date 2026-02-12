@@ -2,11 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="llmstxt" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="llmstxt" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1">
             <label>LLMS.txt</label>
             <tab>studioraz</tab>
             <resource>SR_LlmsTxt::config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
                 <label>General Settings</label>
                 <comment><![CDATA[
                     <p>LLMS.txt is a standard for helping AI systems understand your store's content.</p>
@@ -32,26 +32,26 @@
                     </ol>
                     <br/>
                 ]]></comment>
-                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
                     <label>Enable LLMS.txt</label>
                     <comment>When enabled, your store will serve an llms.txt file at https://www.yourdomain.com/llms.txt</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
-                <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1">
                     <label>Pages</label>
                     <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
                     <validate>required-entry</validate>
                 </field>
 
 
-                <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1">
                     <label>Categories</label>
                     <source_model>SR\LlmsTxt\Model\Source\ActiveWithEmptyOptionCategory</source_model>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1">
                     <label>Product Limit</label>
                     <comment>Number of best-selling products to include in the LLMS.txt feed (default: 10)</comment>
                     <validate>required-entry validate-number validate-greater-than-zero</validate>
@@ -63,11 +63,11 @@
                     <comment>Override generated content with your own custom content</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1">
                     <label>Content</label>
                     <validate>required-entry</validate>
                 </field>
-                <field id="generate_button" translate="label" type="button" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="generate_button" translate="label" type="button" sortOrder="45" showInDefault="1" showInWebsite="1">
                     <label></label>
                     <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\GenerateButton</frontend_model>
                 </field>

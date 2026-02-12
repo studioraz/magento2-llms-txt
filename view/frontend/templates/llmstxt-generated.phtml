@@ -6,7 +6,9 @@
 $block = $block ?? $this->getLayout()->getBlock('llmstxt.data');
 $data = $block->getData('generatedData')->getCollectedData();
 ?>
+<?php if ($data['store_name']) : ?>
 # <?= $data['store_name'] ?>
+<?php endif; ?>
 
 <?= $data['home_page_meta_title'] ?>
 
@@ -15,7 +17,7 @@ $data = $block->getData('generatedData')->getCollectedData();
 
 <?php if (!empty($data['cms_pages'])): ?>
 <?php foreach ($data['cms_pages'] as $page): ?>
-- [<?= $page['title'] ?>](<?= $page['url'] ?>)<?php if (!empty($cat['meta_description'])): ?> : <?= $page['meta_description'] ?><?php endif; ?><?= PHP_EOL ?>
+- [<?= $page['title'] ?>](<?= $page['url'] ?>)<?php if (!empty($page['meta_description'])): ?> : <?= $page['meta_description'] ?><?php endif; ?><?= PHP_EOL ?>
 <?php endforeach; ?>
 <?php endif; ?>
 
