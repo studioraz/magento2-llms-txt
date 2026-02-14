@@ -19,35 +19,26 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
-                <!-- Hidden functionality for now: By default - TRUE -->
-                <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInStore="1">
-                    <label>Use Manual Content</label>
-                    <comment>Override generated content with your own custom content</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-
-
                 <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInStore="1">
-                    <label>Pages</label>
+                    <label>Featured Pages</label>
                     <source_model>SR\LlmsTxt\Model\Source\Page</source_model>
                     <validate>required-entry</validate>
                 </field>
 
-
                 <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInStore="1">
-                    <label>Categories</label>
+                    <label>Featured Categories</label>
                     <source_model>SR\LlmsTxt\Model\Source\ActiveWithEmptyOptionCategory</source_model>
                     <validate>required-entry</validate>
                 </field>
 
                 <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Product Limit</label>
+                    <label>Best-seller Products Limit</label>
                     <comment>Number of best-selling products to include in the LLMS.txt feed (default: 10)</comment>
                     <validate>required-entry validate-number validate-greater-than-zero</validate>
                 </field>
 
                 <field id="amasty_faq_enabled" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInStore="1">
-                    <label>Amasty FAQ</label>
+                    <label>Enable Amasty FAQ</label>
                     <comment>Include all enabled Amasty FAQ categories and questions in the LLMS.txt feed. Amasty FAQ will be included only if the module is installed and active.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
@@ -57,12 +48,6 @@
                     <comment>Add social media links to be included in the LLMS.txt feed</comment>
                     <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\SocialMediaLinksField</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
-                </field>
-
-
-                <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInStore="1">
-                    <label>Content</label>
-                    <validate>required-entry</validate>
                 </field>
 
                 <field id="additional_content" translate="label comment" type="textarea" sortOrder="50" showInDefault="1" showInStore="1">
