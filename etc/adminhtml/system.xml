@@ -2,68 +2,49 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="llmstxt" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1">
+        <section id="llmstxt" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>LLMS.txt</label>
             <tab>studioraz</tab>
             <resource>SR_LlmsTxt::config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Settings</label>
                 <comment><![CDATA[
                     <p>LLMS.txt is a standard for helping AI systems understand your store's content.</p>
+                    <p><strong>IMPORT</strong>: LLMS.txt can be configured either globally (Default Config) or per store view. If you have multiple store views, make sure to configure LLMS.txt for each view to ensure accurate content representation.</p>
                     <p>Learn more at <a href="https://llmstxt.org" target="_blank">llmstxt.org</a></p>
-                    <p><strong>How to use:</strong></p>
-                    <ol style="margin-left: 30px;">
-                        <li>Enable the LLMS.txt feature by setting 'Enable LLMS.txt' to 'Yes'.</li>
-                        <li>Click on 'Generate Content' button.</li>
-                        <li>Wait for the process to complete (may take a few seconds).</li>
-                        <li>The generated content will appear in the <code>Content</code> field below.</li>
-                        <li>Review the content and make any desired edits.</li>
-                        <li>Save the configuration to apply the changes.</li>
-                    </ol>
-                   <p><strong>If you'd like to use a markdown editor for further customization, follow these steps:</strong></p>
-                   <ol style="margin-left: 30px;">
-                        <li>Click on 'Copy to Clipboard' button to copy the content from <code>Content</code> field.</li>
-                        <li>Go to <a target="_blank" href="https://markdownlivepreview.com">markdownlivepreview.com</a>.</li>
-                        <li>Paste the content into the editor to preview and edit it.</li>
-                        <li>Review the formatting and make any necessary changes.</li>
-                        <li>Once satisfied, copy the final version from the online editor.</li>
-                        <li>Paste it back into the <code>Content</code> field in your Magento configuration and save your changes.</li>
-                        <li>Save the configuration to apply the changes.</li>
-                    </ol>
-                    <br/>
                 ]]></comment>
-                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1">
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInStore="1">
                     <label>Enable LLMS.txt</label>
                     <comment>When enabled, your store will serve an llms.txt file at https://www.yourdomain.com/llms.txt</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
-                <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1">
+                <field id="pages" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInStore="1">
                     <label>Pages</label>
-                    <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+                    <source_model>SR\LlmsTxt\Model\Source\Page</source_model>
                     <validate>required-entry</validate>
                 </field>
 
 
-                <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1">
+                <field id="categories" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInStore="1">
                     <label>Categories</label>
                     <source_model>SR\LlmsTxt\Model\Source\ActiveWithEmptyOptionCategory</source_model>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1">
+                <field id="product_limit" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="1">
                     <label>Product Limit</label>
                     <comment>Number of best-selling products to include in the LLMS.txt feed (default: 10)</comment>
                     <validate>required-entry validate-number validate-greater-than-zero</validate>
                 </field>
 
-                <field id="amasty_faq_enabled" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInWebsite="1">
+                <field id="amasty_faq_enabled" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInWebsite="0" showInStore="1">
                     <label>Amasty FAQ</label>
                     <comment>Include all enabled Amasty FAQ categories and questions in the LLMS.txt feed. Amasty FAQ will be included only if the module is installed and active.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
-                <field id="social_media_links" translate="label comment" type="text" sortOrder="27" showInDefault="1" showInWebsite="1">
+                <field id="social_media_links" translate="label comment" type="text" sortOrder="27" showInDefault="1" showInStore="1">
                     <label>Social Media Links</label>
                     <comment>Add social media links to be included in the LLMS.txt feed</comment>
                     <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\SocialMediaLinksField</frontend_model>
@@ -71,16 +52,16 @@
                 </field>
 
                 <!-- Hidden functionality for now: By default - TRUE -->
-                <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="0">
+                <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInStore="1">
                     <label>Use Manual Content</label>
                     <comment>Override generated content with your own custom content</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1">
+                <field id="manual_content" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInStore="1">
                     <label>Content</label>
                     <validate>required-entry</validate>
                 </field>
-                <field id="generate_button" translate="label" type="button" sortOrder="45" showInDefault="1" showInWebsite="1">
+                <field id="generate_button" translate="label" type="button" sortOrder="45" showInDefault="1" showInStore="1">
                     <label></label>
                     <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\GenerateButton</frontend_model>
                 </field>
