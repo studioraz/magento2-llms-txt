@@ -15,13 +15,13 @@
                 translate="title"
                 sortOrder="250"/>
 
-        <add id="SR_LlmsTxt::config" 
-             title="Settings.txt" 
-             module="SR_LlmsTxt" 
-             translate="title" 
+        <add id="SR_LlmsTxt::config"
+             title="Settings"
+             module="SR_LlmsTxt"
+             translate="title"
              sortOrder="10000"
-             action="adminhtml/system_config/edit/section/llmstxt/" 
-             parent="SR_LlmsTxt::srllmstxt" 
+             action="adminhtml/system_config/edit/section/llmstxt/"
+             parent="SR_LlmsTxt::srllmstxt"
              resource="SR_LlmsTxt::config"/>
     </menu>
 </config>

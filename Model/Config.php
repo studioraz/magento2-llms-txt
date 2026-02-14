@@ -16,6 +16,7 @@ class Config
     private const XML_PATH_ENABLED = 'llmstxt/general/enabled';
     private const XML_PATH_MANUAL_CONTENT = 'llmstxt/general/manual_content';
     private const XML_PATH_USE_MANUAL_CONTENT = 'llmstxt/general/use_manual_content';
+    private const XML_PATH_ADDITIONAL_CONTENT = 'llmstxt/general/additional_content';
     private const XML_PATH_PAGES = 'llmstxt/general/pages';
     private const XML_PATH_CATEGORIES = 'llmstxt/general/categories';
     private const XML_PATH_PRODUCT_LIMIT = 'llmstxt/general/product_limit';
@@ -41,6 +42,15 @@ class Config
     {
         return (string) $this->scopeConfig->getValue(
             self::XML_PATH_MANUAL_CONTENT,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    public function getAdditionalContent(?int $storeId = null): string
+    {
+        return (string) $this->scopeConfig->getValue(
+            self::XML_PATH_ADDITIONAL_CONTENT,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );

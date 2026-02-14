@@ -45,6 +45,7 @@ class StoreDataCollector
             'faq' => $this->collectFaq($storeId),
             'social_media' => $this->collectSocialLinks($storeId),
             'point_of_sales' => $this->getPointOfSales($storeId, $baseUrl),
+            'additional_content' => $this->config->getAdditionalContent($storeId),
         ];
     }
 

@@ -40,12 +40,6 @@ $data = $block->getViewModel()->getCollectedData();
 - [<?= $product['name'] ?>](<?= $product['url'] ?>)<?php if (!empty($product['description'])): ?> : <?= $product['description'] ?><?php endif; ?><?= PHP_EOL ?>
 <?php endforeach; ?>
 
-## <?= __('Orders & Account Support') ?>
-
-- [<?= _('My Account'); ?>](<?= $data['store_url'] ?>customer/account/login): <?= __('Manage profile, addresses, and order history.') ?><?= PHP_EOL ?>
-- [<?= _('Order Tracking')?>](<?= $data['store_url'] ?>sales/order/history): <?= __('Track shipments using order number or login.') ?><?= PHP_EOL ?>
-
-
 <?php if (!empty($data['point_of_sales'])): ?>
 ## <?= $escaper->escapeHtml(__('Physical Stores')) . PHP_EOL . PHP_EOL ?>
 
@@ -79,3 +73,6 @@ $data = $block->getViewModel()->getCollectedData();
 <?php endforeach; ?>
 <?php endif; ?>
 
+<?php if (!empty($data['additional_content'])): ?>
+<?= $escaper->escapeHtml($data['additional_content']) ?>
+<?php endif; ?>

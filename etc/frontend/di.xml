@@ -14,22 +14,9 @@
         </arguments>
     </virtualType>
 
-    <!--
-    <virtualType name="llmstxtGeneratedResultPage" type="Magento\Framework\View\Result\Page">
-        <arguments>
-            <argument name="template" xsi:type="string">SR_LlmsTxt::llmstxt-generated.phtml</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="llmstxtGeneratedResultPageFactory" type="Magento\Framework\View\Result\PageFactory">
-        <arguments>
-            <argument name="instanceName" xsi:type="string">llmstxtGeneratedResultPage</argument>
-        </arguments>
-    </virtualType>
-    -->
     <type name="SR\LlmsTxt\Controller\Index\Index">
         <arguments>
             <argument name="llmsResultPageFactory" xsi:type="object">llmstxtResultPageFactory</argument>
-            <!--<argument name="generatedResultPageFactory" xsi:type="object">llmstxtGeneratedResultPageFactory</argument>-->
         </arguments>
     </type>
 
