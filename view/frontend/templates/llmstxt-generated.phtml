@@ -1,10 +1,13 @@
 <?php
-/**
-* @var $block \SR\LlmsTxt\ViewModel\GeneratedData
-*/
+declare(strict_types=1);
 
-$block = $block ?? $this->getLayout()->getBlock('llmstxt.data');
-$data = $block->getData('generatedData')->getCollectedData();
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+//$block = $block ?? $this->getLayout()->getBlock('llmstxt.data');
+//$data = $block->getData('generatedData')->getCollectedData();
+
+$data = $block->getViewModel()->getCollectedData();
 ?>
 <?php if ($data['store_name']) : ?>
 # <?= $data['store_name'] ?>
@@ -57,38 +60,22 @@ $data = $block->getData('generatedData')->getCollectedData();
 
 <?php endforeach; ?>
 <?php endif; ?>
+<?php if (!empty($data['faq'])): ?>
+## <?= __('Frequently Asked Questions') ?><?= PHP_EOL . PHP_EOL ?>
+<?php foreach ($data['faq'] as $category): ?>
+### <?= $escaper->escapeHtml($category['category_title']) ?><?= PHP_EOL . PHP_EOL ?>
+<?php foreach ($category['questions'] as $question): ?>
+**<?= __('Question') ?>: <?= $escaper->escapeHtml($question['title']) ?>**<?= PHP_EOL ?>
 
-<!-- Uncomment to include FAQ section -->
-<!-- WARNING: customize the questions and answers before publishing -->
-<!--
-## <?= __('Frequently Asked Questions') ?><?= PHP_EOL ?>
+<?= __('Answer') ?>: <?= $escaper->escapeHtml($question['answer']) ?><?= PHP_EOL . PHP_EOL ?>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
-## Shipping & Delivery
+<?php if (!empty($data['social_media'])): ?>
+## <?= __('Connect with Us on Social Media') ?><?= PHP_EOL . PHP_EOL ?>
+<?php foreach ($data['social_media'] as $link): ?>
+- [<?= $escaper->escapeHtml($link['name']) ?>](<?= $escaper->escapeUrl($link['url']) ?>)<?= PHP_EOL ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
-** Q: How much does shipping cost?**
-A: Shipping costs vary based on order size and destination. Standard shipping starts at $5.99, with free shipping on orders over $75.
-
-** Q: Do you offer international shipping?**
-A: Yes, we ship to select countries worldwide. Please check our Shipping Policy page for the
--->
-
-
-<!-- Uncomment to include Social Media Links section -->
-<!-- WARNING: replace dummy links with actual social media URLs before publishing -->
-<!--
-## <?= __('Connect with Us on Social Media') ?><?= PHP_EOL ?>
-- [facebook] (https://www.facebook.com/{accoubnt})
-- [facebook] (https://www.instagram.com/{account})
-- [telegram](https://t.me/{account})
-- [tikTok](https://www.tiktok.com/@{account})
--->
-
-
-
-<!-- Uncomment to include Product Feeds section -->
-<!-- WARNING: replace dummy links with actual feed URLs before publishing -->
-<!--
-## <?= __('Product Feeds') ?><?= PHP_EOL ?>
-- <?= __('Google Shopping Feed') ?>: <?= $data['store_url'] ?>feed/google.xml<?= PHP_EOL ?>
-- <?= __('Facebook Product Feed') ?>: <?= $data['store_url'] ?>feed/facebook.xml<?= PHP_EOL ?>
--->

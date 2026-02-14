@@ -57,6 +57,19 @@
                     <validate>required-entry validate-number validate-greater-than-zero</validate>
                 </field>
 
+                <field id="amasty_faq_enabled" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInWebsite="1">
+                    <label>Amasty FAQ</label>
+                    <comment>Include all enabled Amasty FAQ categories and questions in the LLMS.txt feed. Amasty FAQ will be included only if the module is installed and active.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="social_media_links" translate="label comment" type="text" sortOrder="27" showInDefault="1" showInWebsite="1">
+                    <label>Social Media Links</label>
+                    <comment>Add social media links to be included in the LLMS.txt feed</comment>
+                    <frontend_model>SR\LlmsTxt\Block\Adminhtml\System\Config\SocialMediaLinksField</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+
                 <!-- Hidden functionality for now: By default - TRUE -->
                 <field id="use_manual_content" translate="label comment" type="select" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="0">
                     <label>Use Manual Content</label>

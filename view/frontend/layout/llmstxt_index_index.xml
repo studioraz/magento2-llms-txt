@@ -3,9 +3,16 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="root">
+            <!--
             <block class="SR\LlmsTxt\Block\Data" name="llmstxt.data" cacheable="false" template="SR_LlmsTxt::llmstxt-generated.phtml">
                 <arguments>
                     <argument name="generatedData" xsi:type="object">SR\LlmsTxt\ViewModel\GeneratedData</argument>
+                </arguments>
+            </block>
+            -->
+            <block class="SR\LlmsTxt\Block\Llms" name="llmstxt.data" cacheable="false" template="SR_LlmsTxt::llmstxt-generated.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">SR\LlmsTxt\ViewModel\GeneratedData</argument>
                 </arguments>
             </block>
         </referenceContainer>

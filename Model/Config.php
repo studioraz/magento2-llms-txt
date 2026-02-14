@@ -8,6 +8,7 @@ use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator;
 use Magento\Cms\Helper\Page;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class Config
@@ -18,9 +19,12 @@ class Config
     private const XML_PATH_PAGES = 'llmstxt/general/pages';
     private const XML_PATH_CATEGORIES = 'llmstxt/general/categories';
     private const XML_PATH_PRODUCT_LIMIT = 'llmstxt/general/product_limit';
+    private const XML_PATH_AMASTY_FAQ = 'llmstxt/general/amasty_faq_enabled';
+    private const XML_PATH_SOCIAL_LINKS = 'llmstxt/general/social_media_links';
 
     public function __construct(
-        private readonly ScopeConfigInterface $scopeConfig
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly SerializerInterface $serializer
     ) {
     }
 
@@ -44,6 +48,7 @@ class Config
 
     public function useManualContent(?int $storeId = null): bool
     {
+        return false;
         return $this->scopeConfig->isSetFlag(
             self::XML_PATH_USE_MANUAL_CONTENT,
             ScopeInterface::SCOPE_STORE,
@@ -62,7 +67,7 @@ class Config
 
     public function getConfigValue(string $path, int $storeId): string
     {
-        return (string)($this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId) ?: '');
+        return (string)($this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId) ?: '');
     }
 
     public function getPages(?int $storeId = null): array
@@ -100,5 +105,47 @@ class Config
             $storeId
         );
         return (int)($limit ?: 10);
+    }
+
+    public function isAmastyFaqEnabled(?int $storeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_AMASTY_FAQ,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    public function getSocialLinks(?int $storeId = null): array
+    {
+        $value = $this->scopeConfig->getValue(
+            self::XML_PATH_SOCIAL_LINKS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        if (!$value) {
+            return [];
+        }
+
+        try {
+            $decoded = $this->serializer->unserialize($value);
+            if (!is_array($decoded)) {
+                return [];
+            }
+
+            $result = [];
+            foreach ($decoded as $item) {
+                if (isset($item['name'], $item['url']) && !empty($item['name']) && !empty($item['url'])) {
+                    $result[] = [
+                        'name' => trim((string)$item['name']),
+                        'url' => trim((string)$item['url']),
+                    ];
+                }
+            }
+            return $result;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }

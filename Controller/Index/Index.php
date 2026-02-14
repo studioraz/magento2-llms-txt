@@ -15,21 +15,16 @@ class Index extends Action implements HttpGetActionInterface
 {
     public function __construct(
         Context $context,
-        private readonly PageFactory $manualResultPageFactory,
-        private readonly PageFactory $generatedResultPageFactory,
-        private readonly Config $config
+        private readonly PageFactory $llmsResultPageFactory
+
     ) {
         parent::__construct($context);
     }
 
     public function execute(): Page
     {
-        $pageFactory = $this->manualResultPageFactory;
-        if ($this->config->isEnabled() && !$this->config->useManualContent()) {
-            $pageFactory = $this->generatedResultPageFactory;
-        }
         /** @var Page $resultPage */
-        $resultPage = $pageFactory->create(true);
+        $resultPage = $this->llmsResultPageFactory->create(true);
         $resultPage->addHandle('llmstxt_index_index');
         $resultPage->setHeader('Content-Type', 'text/plain; charset=utf-8');
 

@@ -25,6 +25,7 @@ class StoreDataCollector
         private readonly SearchCriteriaBuilder     $searchCriteriaBuilder,
         private readonly Manager                   $moduleManager,
         private readonly Config                    $config,
+        private readonly FaqCollector              $faqCollector,
         private readonly ?array $dependenciesArray = null
     ) {
     }
@@ -41,6 +42,8 @@ class StoreDataCollector
             'products' => $this->collectProducts($storeId, $baseUrl),
             'product_feed_urls' => $this->getProductFeedUrls($storeId),
             'cms_pages' => $this->collectCmsPages($storeId, $baseUrl),
+            'faq' => $this->collectFaq($storeId),
+            'social_media' => $this->collectSocialLinks($storeId),
             'point_of_sales' => $this->getPointOfSales($storeId, $baseUrl),
         ];
     }
@@ -160,6 +163,20 @@ class StoreDataCollector
         }
 
         return $cmsPages;
+    }
+
+    protected function collectFaq(int $storeId): array
+    {
+        if (!$this->config->isAmastyFaqEnabled($storeId)) {
+            return [];
+        }
+
+        return $this->faqCollector->collect($storeId);
+    }
+
+    protected function collectSocialLinks(int $storeId): array
+    {
+        return $this->config->getSocialLinks($storeId);
     }
 
     protected function getBaseUrl(int $storeId): string

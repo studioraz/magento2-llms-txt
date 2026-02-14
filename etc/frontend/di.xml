@@ -2,9 +2,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+
     <virtualType name="llmstxtResultPage" type="Magento\Framework\View\Result\Page">
         <arguments>
-            <argument name="template" xsi:type="string">SR_LlmsTxt::llmstxt-manual.phtml</argument>
+            <argument name="template" xsi:type="string">SR_LlmsTxt::root.phtml</argument>
         </arguments>
     </virtualType>
     <virtualType name="llmstxtResultPageFactory" type="Magento\Framework\View\Result\PageFactory">
@@ -13,6 +14,7 @@
         </arguments>
     </virtualType>
 
+    <!--
     <virtualType name="llmstxtGeneratedResultPage" type="Magento\Framework\View\Result\Page">
         <arguments>
             <argument name="template" xsi:type="string">SR_LlmsTxt::llmstxt-generated.phtml</argument>
@@ -23,11 +25,11 @@
             <argument name="instanceName" xsi:type="string">llmstxtGeneratedResultPage</argument>
         </arguments>
     </virtualType>
-
+    -->
     <type name="SR\LlmsTxt\Controller\Index\Index">
         <arguments>
-            <argument name="manualResultPageFactory" xsi:type="object">llmstxtResultPageFactory</argument>
-            <argument name="generatedResultPageFactory" xsi:type="object">llmstxtGeneratedResultPageFactory</argument>
+            <argument name="llmsResultPageFactory" xsi:type="object">llmstxtResultPageFactory</argument>
+            <!--<argument name="generatedResultPageFactory" xsi:type="object">llmstxtGeneratedResultPageFactory</argument>-->
         </arguments>
     </type>
 

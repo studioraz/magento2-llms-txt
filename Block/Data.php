@@ -12,6 +12,7 @@ use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Element\Context;
 use Magento\Framework\View\FileSystem;
 use Magento\Framework\View\TemplateEnginePool;
+use Magento\Store\Model\App\Emulation;
 use Magento\Store\Model\StoreManagerInterface;
 use SR\LlmsTxt\Model\Config;
 use SR\LlmsTxt\ViewModel\GeneratedData;
@@ -24,7 +25,7 @@ class Data extends AbstractBlock
         private readonly StoreManagerInterface $storeManager,
         private readonly GeneratedData $generatedData,
         private readonly State $appState,
-        private readonly \Magento\Store\Model\App\Emulation $appEmulation,
+        private readonly Emulation $appEmulation,
         private readonly FileSystem $fileSystem,
         private readonly DesignInterface $design,
         private readonly ThemeProviderInterface $themeProvider,
@@ -49,7 +50,7 @@ class Data extends AbstractBlock
 
             if ($this->appState->getAreaCode() === Area::AREA_ADMINHTML) {
                 $storeId = $this->getData('adminhtml_store_id') ?? $storeId;
-                // Emulate frontend environment to render the template correctly.
+                // Emulate the frontend environment to render the template correctly.
                 $this->appEmulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
 
                 $themeId = $this->design->getConfigurationDesignTheme('frontend');

@@ -8,6 +8,7 @@
                 <!-- Always use manual content by default -->
                 <use_manual_content>1</use_manual_content>
                 <product_limit>10</product_limit>
+                <faq_enabled>0</faq_enabled>
             </general>
         </llmstxt>
     </default>
