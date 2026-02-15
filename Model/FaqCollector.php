@@ -59,9 +59,9 @@ class FaqCollector
                 $categoryQuestions = [];
                 foreach ($questions as $question) {
                     $categoryQuestions[] = [
-                        'title' => (string)$question->getTitle(),
+                        'title' => $this->sanitize((string)$question->getTitle()),
                         'position' => (int)$question->getPosition(),
-                        'answer' => $this->sanitizeAnswer((string)$question->getAnswer())
+                        'answer' => $this->sanitize((string)$question->getAnswer())
                     ];
                 }
 
@@ -155,7 +155,7 @@ class FaqCollector
      * @param string $html The raw answer content
      * @return string Sanitized text content
      */
-    private function sanitizeAnswer(string $html): string
+    private function sanitize(string $html): string
     {
         // Remove style and script tags along with their content
         $sanitized = preg_replace(
